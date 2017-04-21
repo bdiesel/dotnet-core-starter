@@ -1,0 +1,21 @@
+﻿@using TestApp.Entities
+@model DataEntity
+
+<div>
+    <h1>Create</h1>
+    <div>
+        @Html.ValidationSummary()
+        @using (Html.BeginForm())
+        {
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name)
+
+            @Html.LabelFor(m => m.Cuisine)
+            @Html.DropDownListFor(m => m.Cuisine, Html.GetEnumSelectList(typeof(CuisineType)))
+            @Html.ValidationMessageFor(m => m.Cuisine)
+        <input type="submit" value="Save!" />
+        }
+    </div>
+
+</div>
