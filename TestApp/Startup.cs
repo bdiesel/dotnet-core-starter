@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Routing;
 using TestApp.Services;
+using TestApp.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestApp
 {
@@ -35,7 +37,10 @@ namespace TestApp
             services.AddMvc();
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
-            services.AddScoped<IDataEntityData, InMemoryDataEntityData>();
+            //services.AddScoped<IDataEntityData, InMemoryDataEntityData>();
+            services.AddScoped<IDataEntityData,SqlDataEntityData>();
+            services.AddDbContext<TestAppDbContext>(options => 
+                    options.UseSqlServer(Configuration.GetConnectionString("TestApp")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

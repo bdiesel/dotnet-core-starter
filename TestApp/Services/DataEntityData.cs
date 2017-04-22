@@ -13,6 +13,34 @@ namespace TestApp.Services
         DataEntity Add(DataEntity newDataEntity);
     }
 
+    public class SqlDataEntityData: IDataEntityData
+    {
+
+        private TestAppDbContext _context;
+
+        public SqlDataEntityData(TestAppDbContext context)
+        {
+            _context = context;
+        }
+
+        public DataEntity Add(DataEntity newDataEntity)
+        {
+            _context.Add(newDataEntity);
+            _context.SaveChanges();
+            return newDataEntity;
+        }
+
+        public DataEntity Get(int id)
+        {
+            return _context.DataEntities.FirstOrDefault(r => r.Id == id);
+        }
+
+        public IEnumerable<DataEntity> GetAll()
+        {
+            return _context.DataEntities;
+        }
+    }
+
     public class InMemoryDataEntityData : IDataEntityData
     {
         static InMemoryDataEntityData()
