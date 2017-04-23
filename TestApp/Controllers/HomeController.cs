@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TestApp.Entities;
 using TestApp.Services;
 using TestApp.ViewModels;
 
 namespace TestApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private IDataEntityData _dataEntityData;
@@ -16,6 +18,7 @@ namespace TestApp.Controllers
             _greeter = greeter;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var model = new HomePageViewModel();
@@ -24,6 +27,7 @@ namespace TestApp.Controllers
             return View(model);
         }
 
+ 
         public IActionResult Details(int id)
         {
             var model = _dataEntityData.Get(id);
@@ -34,6 +38,31 @@ namespace TestApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var model = _dataEntityData.Get(id);
+            if(model == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, DataEntityEditViewModel model)
+        {
+            var dataEntity = _dataEntityData.Get(id);
+            if (ModelState.IsValid)
+            {
+                dataEntity.Cuisine = model.Cuisine;
+                dataEntity.Name = model.Name;
+
+                return RedirectToAction("Details", new { id = dataEntity.Id });
+            }
+            return View(dataEntity);
+        }
 
         [HttpGet]
         public IActionResult Create()

@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace TestApp.Entities
 {
-    public class TestAppDbContext : DbContext
+    public class TestAppDbContext : IdentityDbContext<User>
     {
         public TestAppDbContext(DbContextOptions options) : base(options)
         {

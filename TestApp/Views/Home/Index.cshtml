@@ -1,22 +1,17 @@
 ﻿@model TestApp.ViewModels.HomePageViewModel
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Advantage</title>
-</head>
-<body>
-    <h1>Welcome</h1>
-    <h3>@Model.CurrentMessage</h3>
-    <table>
-        @foreach (var data in Model.DataEntites)
-        {
-            <tr>
-                <td>
-                   <a href="/home/details/@data.Id">Details</a>
-                </td>
-               <td>@data.Name</td>
-            </tr>
-        }
-    </table>
-</body>
-</html>
+@{ 
+    ViewBag.Title = "Home";
+}
+
+<h1>Welcome</h1>
+
+@foreach(var data in Model.DataEntites)
+{
+    @Html.Partial("_Summary", data)
+
+}
+
+<div>
+    <a asp-action="Create">Create</a>
+</div>

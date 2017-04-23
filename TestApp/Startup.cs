@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Routing;
 using TestApp.Services;
 using TestApp.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TestApp
 {
@@ -41,6 +42,8 @@ namespace TestApp
             services.AddScoped<IDataEntityData,SqlDataEntityData>();
             services.AddDbContext<TestAppDbContext>(options => 
                     options.UseSqlServer(Configuration.GetConnectionString("TestApp")));
+            services.AddIdentity<User, IdentityRole>()
+                    .AddEntityFrameworkStores<TestAppDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +62,7 @@ namespace TestApp
 
             //app.UseWelcomePage();
             app.UseFileServer();
+            app.UseIdentity();
             app.UseMvc(configureRoutes);
             app.Run(ctx => ctx.Response.WriteAsync("Not Found!"));
 
