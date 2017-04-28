@@ -18,7 +18,6 @@ namespace TestApp.Controllers
         {
             _dataEntityData = dataEntityData;
             _greeter = greeter;
-            // _tenant = tenant;
             _tenant = tenant;
         }
 

@@ -34,7 +34,6 @@ namespace TestApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMvcCore().AddViewFeatures();
             services.AddMvc();
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
@@ -45,6 +44,7 @@ namespace TestApp
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<TestAppDbContext>();
             services.AddMultitenancy<AppTenant, AppTenantResolver>();
+            services.Configure<MultiTenancyOptions>(Configuration.GetSection("Multitenancy"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,21 +61,11 @@ namespace TestApp
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseWelcomePage();
             app.UseFileServer();
             app.UseIdentity();
             app.UseMultitenancy<AppTenant>();
             app.UseMvc(configureRoutes);
             app.Run(ctx => ctx.Response.WriteAsync("Not Found!"));
-
-            /*app.Run(async (context) =>
-            {
-                //var message = Configuration["Greeting"];
-                //var message = "XXX";
-                var message = greeter.GetGreeting();
-                await context.Response.WriteAsync(message);
-                   
-            });*/
         }
 
         private void configureRoutes(IRouteBuilder routeBuilder)

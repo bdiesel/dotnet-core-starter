@@ -3,22 +3,18 @@ using SaasKit.Multitenancy;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace TestApp
 {
     public class AppTenantResolver : ITenantResolver<AppTenant>
     {
-        IEnumerable<AppTenant> tenants = new List<AppTenant>(new[]
+        private readonly IEnumerable<AppTenant> tenants;
+
+        public AppTenantResolver(IOptions<MultiTenancyOptions> options)
         {
-        new AppTenant {
-            Name = "Brian's World",
-            Hostnames = new[] { "localhost:52701" }
-        }//,
-        /*new AppTenant {
-            Name = "Tenant 2",
-            Hostnames = new[] { "localhost:6002" }
-        }*/
-    });
+            this.tenants = options.Value.Tenants;
+        }
 
         public async Task<TenantContext<AppTenant>> ResolveAsync(HttpContext context)
         {
