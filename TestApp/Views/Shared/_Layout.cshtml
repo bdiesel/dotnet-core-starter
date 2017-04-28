@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+<meta name="viewport" content="width=device-width" />
+<title>@ViewBag.Title</title>
 </head>
 <body>
+    <div>
+        Tennant: @Tenant.Name
+    </div>
     <div>
         @await  Component.InvokeAsync("LoginLogout")
     </div>

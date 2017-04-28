@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TestApp.Entities;
 using TestApp.Services;
 using TestApp.ViewModels;
+using SaasKit.Multitenancy;
 
 namespace TestApp.Controllers
 {
@@ -11,11 +12,14 @@ namespace TestApp.Controllers
     {
         private IDataEntityData _dataEntityData;
         private IGreeter _greeter;
+        private AppTenant _tenant;
 
-        public HomeController(IDataEntityData dataEntityData, IGreeter greeter)
+        public HomeController(IDataEntityData dataEntityData, IGreeter greeter, AppTenant tenant)
         {
             _dataEntityData = dataEntityData;
             _greeter = greeter;
+            // _tenant = tenant;
+            _tenant = tenant;
         }
 
         [AllowAnonymous]

@@ -44,6 +44,7 @@ namespace TestApp
                     options.UseSqlServer(Configuration.GetConnectionString("TestApp")));
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<TestAppDbContext>();
+            services.AddMultitenancy<AppTenant, AppTenantResolver>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +64,7 @@ namespace TestApp
             //app.UseWelcomePage();
             app.UseFileServer();
             app.UseIdentity();
+            app.UseMultitenancy<AppTenant>();
             app.UseMvc(configureRoutes);
             app.Run(ctx => ctx.Response.WriteAsync("Not Found!"));
 

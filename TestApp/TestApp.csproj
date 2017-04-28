@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
+    <PackageReference Include="SaasKit.Multitenancy" Version="1.1.4" />
     <!--<PackageReference Include="Microsoft.AspNet.Mvc.Core" version="1.1.1" /> -->
   </ItemGroup>
 
