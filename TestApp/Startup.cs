@@ -13,6 +13,7 @@ using TestApp.Services;
 using TestApp.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace TestApp
 {
@@ -37,10 +38,16 @@ namespace TestApp
             services.AddMvc();
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
-            //services.AddScoped<IDataEntityData, InMemoryDataEntityData>();
             services.AddScoped<IDataEntityData,SqlDataEntityData>();
-            services.AddDbContext<TestAppDbContext>(options => 
+
+           /* services.AddDbContext<TestAppDbContext>(options => 
                     options.UseSqlServer(Configuration.GetConnectionString("TestApp")));
+           */ 
+            
+            services.AddEntityFramework()
+                    .AddSqlServer()
+                    .AddDbContext<SqlServerApplicationDbContext>();
+            
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<TestAppDbContext>();
             services.AddMultitenancy<AppTenant, AppTenantResolver>();
